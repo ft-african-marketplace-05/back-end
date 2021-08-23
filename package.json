@@ -9,7 +9,13 @@
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "resetdb": "npm run rollback && npm run migrate && npm run seed",
+    "migrateh": "heroku run knex migrate:latest -a ft-african-marketplace-05",
+    "rollbackh": "heroku run knex migrate:rollback -a ft-african-marketplace-05",
+    "databaseh": "heroku pg:psql -a ft-african-marketplace-05",
+    "seedh": "heroku run knex seed:run -a ft-african-marketplace-05",
+    "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --runInBand",
+    "deploy": "git push heroku main"
   },
   "repository": {
     "type": "git",

@@ -5,7 +5,7 @@ const cors = require("cors");
 const { restricted } = require("./auth/auth-middleware");
 
 const usersRouter = require("./users/users-router");
-const plantsRouter = require("./items/items-router");
+const itemsRouter = require("./items/items-router");
 const authRouter = require("./auth/auth-router");
 
 const server = express();
@@ -15,7 +15,7 @@ server.use(helmet());
 server.use(cors());
 
 server.use("/api/users", restricted, usersRouter);
-server.use("/api/items", restricted, plantsRouter);
+server.use("/api/items", restricted, itemsRouter);
 server.use("/api/auth", authRouter);
 
 server.get("/", (req, res) => {
