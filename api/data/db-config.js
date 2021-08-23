@@ -1,4 +1,7 @@
 const knex = require("knex");
 const configs = require("../../knexfile");
+const environment = process.env.DB_ENV || 'development';
 
-module.exports = knex(configs[process.env.NODE_ENV]);
+process.env.DEV_DATABASE_URL = 'https://ft-african-marketplace-05-back.herokuapp.com/'
+
+module.exports = knex(configs[environment]);
