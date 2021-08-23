@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../secrets/index");
 const Users = require("../users/users-model");
 
+
 async function checkUsernameUnique(req, res, next) {
   try {
     const existing = await Users.findBy({
