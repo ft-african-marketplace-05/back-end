@@ -2,7 +2,7 @@ const db = require("../data/db-config");
 
 function findAll() {
   return db("users")
-    .select("user_id", "username", "phone_number")
+    .select("user_id", "username")
     .orderBy("user_id", "asc");
 }
 
@@ -18,7 +18,6 @@ async function findById(user_id) {
   const result = {
     user_id: rows[0].user_id,
     username: rows[0].username,
-    phone_number: rows[0].phone_number,
     items: [],
   };
 
@@ -42,14 +41,13 @@ async function add(user) {
   const [newUser] = await db("users").insert(user, [
     "user_id",
     "username",
-    "phone_number",
   ]);
   return newUser;
 }
 
 async function update(user_id, user) {
   const [updatedUser] = await db("users")
-    .update(user, ["user_id", "username", "phone_number"])
+    .update(user, ["user_id", "username"])
     .where("user_id", user_id);
   return updatedUser;
 }

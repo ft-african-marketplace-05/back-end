@@ -21,6 +21,8 @@ router.post(
 
     Users.add(user)
       .then((newUser) => {
+        // const token = tokenBuilder(newUser)
+        // res.status(201).json({newUser, token})
         res.status(201).json({
           message: `Account successfully created. Welcome ${newUser.username}!`,
           newUser: {
