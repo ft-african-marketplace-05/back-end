@@ -60,12 +60,14 @@ async function checkUsernameExists(req, res, next) {
 }
 
 function restricted(req, res, next) {
-  const token = req.headers.authorization;
+  let token = req.headers.authorization;
   if (!token) {
     return next({ status: 401, message: "Token required." });
   }
+  token = token.split(" ")[1];
   jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
     if (err) {
+        console.log(token)
       return next({ status: 401, message: "Invalid token." });
     }
     req.decodedToken = decodedToken;

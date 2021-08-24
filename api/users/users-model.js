@@ -7,10 +7,11 @@ function findAll() {
 }
 
 async function findById(user_id) {
+  console.log(user_id)
   const rows = await db("users as u")
     .join("items as i", "u.user_id", "i.user_id")
     .where("u.user_id", user_id);
-
+  console.log(rows)
   if (rows.length === 0) {
     return undefined;
   }
@@ -47,7 +48,7 @@ async function add(user) {
 
 async function update(user_id, user) {
   const [updatedUser] = await db("users")
-    .update(user, ["user_id", "username"])
+    .update(user, ["user_id", "username", "password"])
     .where("user_id", user_id);
   return updatedUser;
 }

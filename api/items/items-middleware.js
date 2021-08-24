@@ -16,23 +16,8 @@ async function checkItemExists(req, res, next) {
   }
 }
 
-// async function checkItemNameUnique(req, res, next) {
-//   try {
-//     const existing = await Items.findBy(req.decodedToken.subject, {
-//       name: req.body.name,
-//     }).first();
-//     if (existing) {
-//       next({ status: 422, message: "This name is taken already." });
-//     } else {
-//       next();
-//     }
-//   } catch (err) {
-//     next(err);
-//   }
-// }
-
 function validateItemPayload(req, res, next) {
-  const { name, description, price } = req.body;
+  const { name, description, price } = req.query;
   if (!name || name.trim() === 0 || !description || description.trim() === 0) {
     next({ status: 422, message: "Name and description required." });
   } else if (price === undefined) {
@@ -50,6 +35,5 @@ function validateItemPayload(req, res, next) {
 
 module.exports = {
   checkItemExists,
-//   checkItemNameUnique,
   validateItemPayload,
 };
