@@ -21,9 +21,9 @@ async function validateCredentials(req, res, next) {
   const { username, password } = req.body;
   if (
     !username ||
-    username.trim() === "" ||
+    username.trim() === " " ||
     !password ||
-    password.trim() === ""
+    password.trim() === " "
   ) {
     next({ status: 422, message: "Username and password required." });
   } else if (username.trim().length < 3 || username.trim() > 30) {

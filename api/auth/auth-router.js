@@ -26,7 +26,7 @@ router.post(
           newUser: {
             user_id: newUser.user_id,
             username: newUser.username,
-            phone_number: newUser.phone_number,
+            // phone_number: newUser.phone_number,
           },
         });
       })
