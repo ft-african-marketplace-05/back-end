@@ -18,17 +18,23 @@ async function checkItemExists(req, res, next) {
 
 function validateItemPayload(req, res, next) {
   const { name, description, price } = req.query;
+  let newPrice;
+  try { 
+    if (price === undefined) {
+      next({ status: 422, message: "Price required." });
+    }
+   newPrice = parseFloat(price)
+  }
+  catch {
+    next({ status: 422, message: "Price must be a number" });
+  }
   if (!name || name.trim() === 0 || !description || description.trim() === 0) {
     next({ status: 422, message: "Name and description required." });
-  } else if (price === undefined) {
-    next({ status: 422, message: "Price required." });
-  } else if (typeof price !== "number") {
-    next({ status: 422, message: "Price must be a number" });
-  } else if (price < .01) {
+  } else if (newPrice < .01) {
     next({ status: 422, message: "Price must be at least .01" });
   } else {
-    req.body.name = name.trim();
-    req.body.description = description.trim();
+    req.query.name = name.trim();
+    req.query.description = description.trim();
     next();
   }
 }
