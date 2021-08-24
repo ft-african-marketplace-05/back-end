@@ -2,6 +2,7 @@ const Users = require("./users-model");
 
 async function checkUserExists(req, res, next) {
   const existing = await Users.findById(req.decodedToken.subject);
+  console.log(existing)
   try {
     if (!existing) {
       next({ status: 404, message: "No user found with that ID." });
@@ -14,7 +15,7 @@ async function checkUserExists(req, res, next) {
 }
 
 function checkUserPayload(req, res, next) {
-  const { username, phone_number } = req.body;
+  const { username } = req.query;
   if (!username || username.trim().length < 3 || username.trim() > 30) {
     next({
       status: 422,

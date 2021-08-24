@@ -17,13 +17,13 @@ async function checkUsernameUnique(req, res, next) {
   }
 }
 
-async function validateCredentials(req, res, next) {
-  const { username, password } = req.body;
+function validateCredentials(req, res, next) {
+  const { username, password } = req.query;
   if (
     !username ||
-    username.trim() === " " ||
+    username.trim() === "" ||
     !password ||
-    password.trim() === " "
+    password.trim() === ""
   ) {
     next({ status: 422, message: "Username and password required." });
   } else if (username.trim().length < 3 || username.trim() > 30) {
@@ -60,12 +60,14 @@ async function checkUsernameExists(req, res, next) {
 }
 
 function restricted(req, res, next) {
-  const token = req.headers.authorization;
+  let token = req.headers.authorization;
   if (!token) {
     return next({ status: 401, message: "Token required." });
   }
+  token = token.split(" ")[1];
   jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
     if (err) {
+        console.log(token)
       return next({ status: 401, message: "Invalid token." });
     }
     req.decodedToken = decodedToken;

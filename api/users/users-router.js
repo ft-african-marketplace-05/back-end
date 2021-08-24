@@ -19,7 +19,7 @@ router.get("/:user_id", checkUserExists, (req, res, next) => {
 });
 
 router.put("/:user_id", checkUserExists, checkUserPayload, (req, res, next) => {
-  Users.update(req.decodedToken.subject, req.body)
+  Users.update(req.decodedToken.subject, req.query)
     .then((user) => {
       res.status(200).json(user);
     })

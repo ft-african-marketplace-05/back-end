@@ -24,7 +24,7 @@ router.get("/:item_id", checkItemExists, (req, res, next) => {
 });
 
 router.post("/", validateItemPayload, (req, res, next) => {
-  items.add(req.decodedToken.subject, req.body)
+  Items.add(req.decodedToken.subject, req.query)
     .then((item) => {
       res.status(201).json(item);
     })
@@ -32,7 +32,7 @@ router.post("/", validateItemPayload, (req, res, next) => {
 });
 
 router.put("/:item_id", checkItemExists, validateItemPayload, (req, res, next) => {
-    Items.update(req.decodedToken.subject, req.params.item_id, req.body)
+    Items.update(req.decodedToken.subject, req.params.item_id, req.query)
       .then((item) => {
         res.status(200).json(item);
       })
