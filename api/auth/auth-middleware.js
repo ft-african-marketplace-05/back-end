@@ -18,7 +18,7 @@ async function checkUsernameUnique(req, res, next) {
 }
 
 function validateCredentials(req, res, next) {
-  const { username, password } = req.query;
+  const { username, password } = req.body;
   if (
     !username ||
     username.trim() === "" ||

@@ -17,7 +17,7 @@ async function checkItemExists(req, res, next) {
 }
 
 function validateItemPayload(req, res, next) {
-  const { name, description, price } = req.query;
+  const { name, description, price } = req.body;
   let newPrice;
   try { 
     if (price === undefined) {
@@ -33,8 +33,8 @@ function validateItemPayload(req, res, next) {
   } else if (newPrice < .01) {
     next({ status: 422, message: "Price must be at least .01" });
   } else {
-    req.query.name = name.trim();
-    req.query.description = description.trim();
+    req.body.name = name.trim();
+    req.body.description = description.trim();
     next();
   }
 }
