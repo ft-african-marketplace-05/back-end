@@ -15,7 +15,7 @@ async function checkUserExists(req, res, next) {
 }
 
 function checkUserPayload(req, res, next) {
-  const { username } = req.query;
+  const { username } = req.body;
   if (!username || username.trim().length < 3 || username.trim() > 30) {
     next({
       status: 422,
