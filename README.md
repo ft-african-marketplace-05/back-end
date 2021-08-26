@@ -3,7 +3,7 @@
 ## <p align="center">https://ft-african-marketplace-05-back.herokuapp.com/</p>
 | AUTH | URL                | Requires                                  | Restrictions | Returns                                                 |
 |------|--------------------|-------------------------------------------|--------------|---------------------------------------------------------|
-| POST | /api/auth/register | -username<br>-password<br>-phone number | None         | Newly created user with <br>auto-generated userId       |
+| POST | /api/auth/register | -username<br>-password | None         | Newly created user with <br>auto-generated userId       |
 | POST | /api/auth/login    | -username<br>-password                    | None         | Logged in user data and <br>JWT token for authorization |
 
 ---
