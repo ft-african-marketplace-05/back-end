@@ -45,7 +45,7 @@ function restricted(req, res, next) {
   if (!token) {
     return next({ status: 401, message: "Token required." });
   }
-  token = token.split(" ")[1];
+  // token = token.split(" ")[1];
   jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
     if (err) {
         console.log(token)
