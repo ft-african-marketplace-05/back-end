@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Items = require("./items-model");
+const {restricted} = require("./items-middleware");
 
 const {
   checkItemExists,
@@ -23,7 +24,7 @@ router.get("/:item_id", checkItemExists, (req, res, next) => {
     .catch(next);
 });
 
-router.post("/", validateItemPayload, (req, res, next) => {
+router.post("/", validateItemPayload, restricted,(req, res, next) => {
   Items.add(req.decodedToken.subject, req.body)
     .then((item) => {
       res.status(201).json(item);
