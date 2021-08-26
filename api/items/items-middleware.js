@@ -3,7 +3,6 @@ const Items = require("./items-model");
 async function checkItemExists(req, res, next) {
   try {
     const existing = await Items.findById(
-      req.decodedToken.subject,
       req.params.item_id
     );
     if (!existing) {

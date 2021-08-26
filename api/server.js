@@ -15,7 +15,7 @@ server.use(helmet());
 server.use(cors());
 
 server.use("/api/users", restricted, usersRouter);
-server.use("/api/items", restricted, itemsRouter);
+server.use("/api/items", itemsRouter);
 server.use("/api/auth", authRouter);
 
 server.get("/", (req, res) => {
