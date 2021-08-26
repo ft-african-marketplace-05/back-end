@@ -1,9 +1,10 @@
 const Items = require("./items-model");
+const jwt = require("jsonwebtoken");
+const { JWT_SECRET } = require("../secrets/index");
 
 async function checkItemExists(req, res, next) {
   try {
     const existing = await Items.findById(
-      req.decodedToken.subject,
       req.params.item_id
     );
     if (!existing) {
@@ -39,7 +40,24 @@ function validateItemPayload(req, res, next) {
   }
 }
 
+function restricted(req, res, next) {
+  let token = req.headers.authorization;
+  if (!token) {
+    return next({ status: 401, message: "Token required." });
+  }
+  token = token.split(" ")[1];
+  jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
+    if (err) {
+        console.log(token)
+      return next({ status: 401, message: "Invalid token." });
+    }
+    req.decodedToken = decodedToken;
+    next();
+  });
+}
+
 module.exports = {
   checkItemExists,
   validateItemPayload,
+  restricted
 };

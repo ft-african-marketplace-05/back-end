@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Items = require("./items-model");
+const {restricted} = require("./items-middleware");
 
 const {
   checkItemExists,
@@ -8,7 +9,7 @@ const {
 } = require("./items-middleware");
 
 router.get("/", (req, res, next) => {
-  Items.findAll(req.decodedToken.subject)
+  Items.findAll()
     .then((items) => {
       res.status(200).json(items);
     })
@@ -16,14 +17,14 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/:item_id", checkItemExists, (req, res, next) => {
-  Items.findById(req.decodedToken.subject, req.params.item_id)
+  Items.findById(req.params.item_id)
     .then((item) => {
       res.status(200).json(item);
     })
     .catch(next);
 });
 
-router.post("/", validateItemPayload, (req, res, next) => {
+router.post("/", validateItemPayload, restricted,(req, res, next) => {
   Items.add(req.decodedToken.subject, req.body)
     .then((item) => {
       res.status(201).json(item);
@@ -32,7 +33,7 @@ router.post("/", validateItemPayload, (req, res, next) => {
 });
 
 router.put("/:item_id", checkItemExists, validateItemPayload, (req, res, next) => {
-    Items.update(req.decodedToken.subject, req.params.item_id, req.body)
+    Items.update(req.params.item_id, req.body)
       .then((item) => {
         res.status(200).json(item);
       })

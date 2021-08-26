@@ -1,19 +1,17 @@
 const db = require("../data/db-config");
 
 function findAll(user_id) {
-  return db("items").where("user_id", user_id);
+  return db("items");
 }
 
-function findById(user_id, item_id) {
+function findById(item_id) {
   return db("items")
-    .where("user_id", user_id)
-    .andWhere("item_id", item_id)
-    .first();
+  .where("item_id", item_id)
 }
 
-function findBy(user_id, filter) {
-  return db("items").where("user_id", user_id).andWhere(filter);
-}
+// function findBy(user_id, filter) {
+//   return db("items").where("user_id", user_id).andWhere(filter);
+// }
 
 async function add(user_id, item) {
   const [newItem] = await db("items").insert(
@@ -36,11 +34,10 @@ async function add(user_id, item) {
   return newItem;
 }
 
-async function update(user_id, item_id, item) {
+async function update(item_id, item) {
   const [updatedItem] = await db("items")
     .update(
       {
-        user_id: user_id,
         name: item.name,
         description: item.description,
         price: item.price,
@@ -66,4 +63,4 @@ async function remove(item_id) {
   return removedItem;
 }
 
-module.exports = { findAll, findById, findBy, add, update, remove };
+module.exports = { findAll, findById, add, update, remove };
